@@ -1,0 +1,27 @@
+﻿@model List<Post>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<form action="/Home/Index" method="post">
+    Select from:
+    <select name="searchType">
+        <option value="new">New</option>
+        <option value="hot">Hot</option>
+    </select><br/>
+    Max results: <input type="number" name="limit" max="100" width="60px" value="10"/><br/>
+    <input type="text" name="query" placeholder="Search query"/><br/>
+    <input type="submit" value="Go!"/>
+</form>
+<ul class="list-group">
+@foreach (Post p in Model)
+{
+    <li class="list-group-item">
+        <img src="@p.Thumbnail" width="70px" height="70px"/>
+        @{
+            string linkUrl = $"https://reddit.com{p.Permalink}";
+        }
+        <a href="@linkUrl">@p.Author - @p.Title</a> Score: @p.Score<br/>
+    </li>
+}
+</ul>
